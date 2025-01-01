@@ -1,0 +1,99 @@
+PRINTER SETUP 1/1/2025
+
+1. Get USB information
+lsusb
+
+2. then details
+lsusb -v -d 28e9:0289
+
+3. Create UDEV rule for printer in /etc/udev/rules.d/99-thermalprinter.rules
+SUBSYSTEM=="usb", ATTRS{idVendor}=="28e9", MODE="0666"
+
+4. Get the printer module. Version 2.2 is needed, version 3 has a bug
+pip install python-escpos==2.2.0
+
+5. Python variables needed to create the printer object
+from escpos import *
+
+printer_type="Usb"
+printer_vendor=0x28e9   # From lsusb
+printer_product=0x0289  # From lsusb
+printer_interface=0
+printer_in_ep=0x81      # From lsusb -v -d
+printer_out_ep=0x03     # From lsusb -v -d
+printer_profile="simple"
+p = printer.Usb(printer_vendor,
+        printer_product,
+        printer_interface,
+        printer_in_ep,
+        printer_out_ep)
+
+lsusb output, we have a GDMicroelectronics micro-printer
+---------------------------------------------------------
+Bus 001 Device 005: ID 7392:7811 Edimax Technology Co., Ltd EW-7811Un 802.11n Wireless Adapter [Realtek RTL8188CUS]
+Bus 001 Device 004: ID 28e9:0289 GDMicroelectronics micro-printer
+Bus 001 Device 003: ID 0424:ec00 Microchip Technology, Inc. (formerly SMSC) SMSC9512/9514 Fast Ethernet Adapter
+Bus 001 Device 002: ID 0424:9514 Microchip Technology, Inc. (formerly SMSC) SMC9514 Hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+detailed USB information. The endpoints are needed for the USB setup
+---------------------------------------------------------------------
+Bus 001 Device 004: ID 28e9:0289 GDMicroelectronics micro-printer
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 
+  bDeviceSubClass         0 
+  bDeviceProtocol         0 
+  bMaxPacketSize0        64
+  idVendor           0x28e9 GDMicroelectronics
+  idProduct          0x0289 
+  bcdDevice            3.00
+  iManufacturer           1 gxmc
+  iProduct                2 micro-printer
+  iSerial                 3 USB0001
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0020
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          5 (error)
+    bmAttributes         0xc0
+      Self Powered
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0              ### record this
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         7 Printer
+      bInterfaceSubClass      1 Printer
+      bInterfaceProtocol      2 Bidirectional
+      iInterface              0 
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT  ### record this
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN   ### record this
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
+Device Status:     0x0001
+  Self Powered
+

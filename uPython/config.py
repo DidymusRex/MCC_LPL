@@ -1,0 +1,13 @@
+SSID='grover_net'
+SSID_PW='open says me'
+
+MQTT_USER='mcc'
+MQTT_PW='mcc'
+MQTT_BROKER='jgrover-yoga.local'
+#MQTT_BROKER='mcc-cthulu.local'
+MQTT_ID = 'mcc-p1'
+MQTT_ROOT = b'mcc'
+MQTT_COMMAND = b'mcc/p1/command'
+MQTT_DATA = b'mcc/console/data'
+MQTT_SUB = b'mcc/p1'
+MQTT_PUB = b'mcc/cards'
