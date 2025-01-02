@@ -146,9 +146,9 @@ def on_message(client, userdata, msg):
 
         if   topic == 'mcc/player':
                 process_player(message)
-        elif topic == 'mcc/passkey'
+        elif topic == 'mcc/passkey':
                 process_passkey(message)
-        elif topic == 'mcc/artifact'
+        elif topic == 'mcc/artifact':
                 process_artifact(message)
         else:
                 print(f'--- ignoring {topic} {message} ---')
