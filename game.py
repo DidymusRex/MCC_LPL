@@ -41,7 +41,7 @@ def process_player(m):
 
 # ------------------------------------------------------------------------------
 def process_passkey(m):
-        if active_player == None:
+        if active_player == 'none':
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
@@ -213,7 +213,7 @@ if __name__ == '__main__':
         mqtt_client.connect(mqtt_broker, mqtt_port, 60)
         test_printer()
         speak_text('the library is now open for business')
-        active_player = None
+        active_player = 'none'
 
         print('BEGIN')
         main()
