@@ -75,12 +75,14 @@ def test_printer():
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text('Font B max chars 44\n')
         p.text('----.----0----.----0----.---0----.---0----\n')
-        p.text(time.strftime('%a %b %d %Y %r\n'))
+        p.text(time.strftime('%a %b %d %Y %r\n\n'))
 
         p.set(align='CENTER')
         v = '2695880042000'
         p.barcode(v, 'EAN13', 64, 2, 'OFF', 'B')
         p.text(v)
+
+        p.image('images/MCCL_Logo_C.png')
 
         v=str(uuid.uuid4())
         p.qr(v, size=6)
