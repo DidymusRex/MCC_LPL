@@ -29,11 +29,16 @@ def on_message(client, userdata, msg):
     print("message retain flag=",msg.retain)
     print("-" * 40)
 
-mqc = mqtt.Client("monitor")
+mqc = mqtt.Client(client_id="monitor",
+                  clean_session=True,
+                  userdata=None,
+                  protocol=mqtt.MQTTv311,
+                  transport="tcp")
 mqc.on_connect = on_connect
 mqc.on_message = on_message
 
 mqc.username_pw_set(mqtt_account, mqtt_passwd)
 mqc.connect(mqtt_broker)
 
+print(f"connected to {mqtt_broker} monitoring topic {mqtt_topic}")
 mqc.loop_forever()
