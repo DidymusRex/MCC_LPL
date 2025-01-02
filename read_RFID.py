@@ -70,7 +70,7 @@ def process_tag(uid):
     # unknown tag
     else:
         topic='mcc'
-        message='Error'
+        message='Unknown RFID item'
 
     print(f'\nuid is {k} : {message}')
     publish_message(topic, message.encode())
@@ -95,7 +95,15 @@ def main():
 
             # Print UID
             print ("Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3]))
+
+            # process the tag. Add a short delay to avoid 2x reads
+            process_tag(uid)
+            time.sleep(2)
         
+            """
+            We don't need to authenticate, we only care about the uid.
+            This code left in place for reference later.
+
             # This is the default key for authentication
             key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
             
@@ -115,6 +123,7 @@ def main():
                 time.sleep(2)
             else:
                 print ("Authentication error")
+            """
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
