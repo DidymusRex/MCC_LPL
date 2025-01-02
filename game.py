@@ -17,18 +17,16 @@ import uuid
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def welcome_player(m):
-        speak_text(f'welcome, {m}.')
-
-# ------------------------------------------------------------------------------
 def process_player(m):
+        print(f'process_player({m})')
+
         global active_player
 
         active_player = m
 
         if player_status[m] == 'inactive':
                 player_status[m] = 'passkey'
-                welcome_player(m)
+                speak_text(f'welcome, {m}.')
                 print_passkey_clue(m)
 
         elif player_status[m] == 'passkey':
@@ -43,6 +41,7 @@ def process_player(m):
 
 # ------------------------------------------------------------------------------
 def process_passkey(m):
+        print(f'process_passkey({m})')
         global active_player
 
         if active_player == 'none':
@@ -103,6 +102,8 @@ def print_library_header():
 
 # ------------------------------------------------------------------------------
 def print_passkey_clue(m):
+        print(f'print_passkey_clue({m}) for {player_assignment[m]}')
+
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
@@ -112,6 +113,7 @@ def print_passkey_clue(m):
 
 # ------------------------------------------------------------------------------
 def print_artifact_clue(m):
+        print(f'print_artifact_clue({m}) for {player_assignment[m]}')
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
@@ -121,7 +123,7 @@ def print_artifact_clue(m):
 
 # ------------------------------------------------------------------------------
 def play_sound(sound_file):
-        print(f'play sound: {sound_file}')
+        print(f'play_sound({sound_file})')
 
         mixer.music.load(sfx_location + sound_file)
         mixer.music.play()
@@ -132,7 +134,8 @@ def speak_text(text):
         with open('temp.txt', 'w') as temp:
                 temp.write(text)
 
-        cmd='cat temp.txt|espeak -ven+m4 -g5 -s160'
+        time.sleep(.1)
+        cmd='cat temp.txt|espeak -ven+f3 -g5 -s160'
         call([cmd],shell=True)
 
 # ------------------------------------------------------------------------------
