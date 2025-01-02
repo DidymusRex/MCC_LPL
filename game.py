@@ -57,7 +57,7 @@ def process_passkey(m):
                         speak_text(ErrorMessages['NotLost'])
         else:
                 player_status[active_player] = 'passkey'
-                print_passkey_clue(m)
+                print_artifact_clue(m)
 
 # ------------------------------------------------------------------------------
 def process_artifact(m):
@@ -217,7 +217,11 @@ if __name__ == '__main__':
         # Connect to the MQTT broker
         print('MQTT client connect')
         mqtt_client.connect(mqtt_broker, mqtt_port, 60)
-        test_printer()
+
+        # We may begin!
+        print_library_header()
+        p.cut()
+        
         speak_text('the library is now open for business')
         active_player = 'none'
 
