@@ -57,7 +57,6 @@ rpds-py==0.22.3
 RPi.GPIO==0.7.1
 six==1.17.0
 soupsieve==2.6
-SPI-Py==1.0
 spidev==3.6
 stack-data==0.6.3
 tinycss2==1.4.0
