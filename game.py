@@ -33,15 +33,15 @@ def process_player(m):
                 player_status[m] = 'active'
 
 # ------------------------------------------------------------------------------
-def process_artifact(m):
+def process_passkey(m):
         if active_player is None:
                 speak_text(ErrorMessage['NotAuthenticated'])
                 return
 
         if m != player_assigment[active_player]:
-                # this leaks a little information about the artifact
-                if m in active_artifacts:
-                        speak_text(ErrorMessage['WrongArtifact'])
+                # this leaks a little information about the passkey
+                if m in active_passkeys:
+                        speak_text(ErrorMessage['WrongPasskey'])
                 else:
                         speak_text(ErrorMessage['NotLost'])
         else:
@@ -139,10 +139,10 @@ def on_message(client, userdata, msg):
 
         if   topic == 'mcc/player':
                 process_player(message)
-        elif topic == 'mcc/artifact'
-                process_artifact(message)
-        elif topic == 'mcc/active_artifact'
-                process_active_artifact(message)
+        elif topic == 'mcc/passkey'
+                process_passkey(message)
+        elif topic == 'mcc/active_passkey'
+                process_active_passkey(message)
         else:
                 print(f"--- ignoring {topic} {message} ---")
  

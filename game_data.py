@@ -3,7 +3,7 @@
 # desc: data for the LPL game
 # Dec 2024: Original code
 # ------------------------------------------------------------------------------
-artifacts = {
+passkeys = {
     '[50, 109, 134, 108, 181]': 'YoricksSkull',
     '[242, 73, 113, 108, 166]': 'ArthursTowel',
     '[226, 232, 146, 108, 244]': 'PippinsBrooch',
@@ -29,13 +29,13 @@ artifacts = {
     '[210, 248, 93, 108, 27]': 'Remembrall',
     '[66, 202, 71, 108, 163]': 'WinstonsRations',
     '[2, 234, 195, 108, 71]': 'VictoryGin',
-    # Test artifacts
+    # Test passkeys
     '[58, 18, 86, 246, 136]': 'TestSticker',
     '[117, 61, 155, 154, 73]': 'TestTag',
     '[203, 48, 38, 3, 222]': 'TestCard',
 }
 
-active_artifacts={
+active_passkeys={
     'YoricksSkull': 'inactive',
     'ArthursTowel': 'inactive',
     'PippinsBrooch': 'inactive',
@@ -89,7 +89,7 @@ player_assigment={
 }
 
 """
-The first set of clues indcating which artifacts to find.
+The first set of clues indcating which passkeys to find.
 """ 
 clues_choose={
     "TestCard":
@@ -146,7 +146,7 @@ ErrorMessages={
     "NotAuthenticated":
     "You are not logged, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.",
     "NotLost":
-    "This artifact, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis artifact is not lost, it's in its \n    place",
-    "WrongArtifact":
-    "This artifact, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
+    "This passkey, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis passkey is not lost, it's in its \n    place",
+    "WrongPasskey":
+    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
 }

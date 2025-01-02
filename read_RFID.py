@@ -63,10 +63,10 @@ def process_tag(uid):
     if k in players:
         topic='mcc/player'
         message=players[k]
-    # check for artifact
-    elif k in artifacts:
-        topic='mcc/artifact'
-        message=artifacts[k]
+    # check for passkey
+    elif k in passkeys:
+        topic='mcc/passkey'
+        message=passkeys[k]
     # unknown tag
     else:
         topic='mcc'
