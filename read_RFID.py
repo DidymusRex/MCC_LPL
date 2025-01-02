@@ -138,4 +138,5 @@ if __name__ == "__main__":
     # Start the MQTT loop
     print('MQTT client loop')
     mqtt_client.loop_start()
+    
     main()
