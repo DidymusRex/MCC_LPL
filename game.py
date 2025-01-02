@@ -10,7 +10,6 @@ from escpos import *
 from game_data import *
 import paho.mqtt.client as mqtt
 import os
-from players import *
 from pygame import mixer
 from subprocess import call
 import time
@@ -19,37 +18,45 @@ import uuid
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def welcome_player(m):
-        pass
+        speak_text(f"welcome, {m}.")
 
 # ------------------------------------------------------------------------------
 def process_player(m):
         active_player = m
 
         if player_status[m] == 'inactive':
-                player_status[m] = 'checked-in'
+                player_status[m] = 'passkey'
                 welcome_player(m)
-                print_clue(m)
+                print_passkey_clue(m)
+
+        elif player_status[m] == 'passkey':
+                player_status[m] = 'artifact'
+                speak_text(f"{m}, please scan your passkey")
+
+        elif player_status[m] == 'artifact':
+                player_status[m] = 'final'
+
         else:
                 player_status[m] = 'active'
 
 # ------------------------------------------------------------------------------
 def process_passkey(m):
-        if active_player is None:
-                speak_text(ErrorMessage['NotAuthenticated'])
+        if active_player == None:
+                speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
-        if m != player_assigment[active_player]:
+        if m != player_assignment[active_player]:
                 # this leaks a little information about the passkey
                 if m in active_passkeys:
-                        speak_text(ErrorMessage['WrongPasskey'])
+                        speak_text(ErrorMessages['WrongPasskey'])
                 else:
-                        speak_text(ErrorMessage['NotLost'])
+                        speak_text(ErrorMessages['NotLost'])
         else:
-                player_status[active_player] = 'searching'
-                print_search(m)
+                player_status[active_player] = 'passkey'
+                print_passkey_clue(m)
 
 # ------------------------------------------------------------------------------
-def print_search(m):
+def process_artifact(m):
         pass
 
 # ------------------------------------------------------------------------------
@@ -76,7 +83,7 @@ def test_printer(p):
         p.cut()
 
 # ------------------------------------------------------------------------------
-def library_header():
+def print_library_header():
         # Library Logo
         p.set(align='CENTER', font='A', width=1, height=1)
         p.image('images/MCCL_LogoC.png')
@@ -86,25 +93,20 @@ def library_header():
         p.text('Library\n')
 
 # ------------------------------------------------------------------------------
-def print_clue(m):
-        library_header()
+def print_passkey_clue(m):
+        print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(clues_choose[player_assignment[m]])
+        p.text(passkey_clues[player_assignment[m]])
 
         p.cut()
+
 # ------------------------------------------------------------------------------
-def print_book_info(title, author, isbn):
+def print_artifact_clue(m):
+        print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text('\nTitle:')
-        p.text(title)        
-        p.text('\nAuthor:')
-        p.text(author)
-        p.text('\nISBN:')
-        p.text(isbn)
-        p.text('\n\n')
-        p.barcode(isbn, 'EAN13', 64, 3, 'OFF', 'A' )
-        p.set(align='LEFT', font='A', width=1, height=1)
-        p.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+        p.text(artifact_clues[[player_assignment[m]])
+
+        p.cut()
 
 # ------------------------------------------------------------------------------
 def play_sound(sound_file):
@@ -141,8 +143,8 @@ def on_message(client, userdata, msg):
                 process_player(message)
         elif topic == 'mcc/passkey'
                 process_passkey(message)
-        elif topic == 'mcc/active_passkey'
-                process_active_passkey(message)
+        elif topic == 'mcc/artifact'
+                process_artifact(message)
         else:
                 print(f"--- ignoring {topic} {message} ---")
  
@@ -202,6 +204,8 @@ if __name__ == "__main__":
                 printer_in_ep,
                 printer_out_ep)
 
+        test_printer()
+        speak_text("the library is now open for business")
         active_player = None
 
         print("BEGIN")

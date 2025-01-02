@@ -31,8 +31,7 @@ passkeys = {
     '[2, 234, 195, 108, 71]': 'VictoryGin',
     # Test passkeys
     '[58, 18, 86, 246, 136]': 'TestSticker',
-    '[117, 61, 155, 154, 73]': 'TestTag',
-    '[203, 48, 38, 3, 222]': 'TestCard',
+    '[117, 61, 155, 154, 73]': 'TestTag'
 }
 
 active_passkeys={
@@ -43,7 +42,8 @@ active_passkeys={
     'JulietsPoison': 'inactive',
     'TimeTurner': 'inactive',
     'DarcysLetter': 'inactive',
-    'HestersA': 'inactive'
+    'HestersA': 'inactive',
+    'TestTag': 'inactive'
 }
 
 players={
@@ -57,7 +57,8 @@ players={
     '[94, 203, 103, 49, 195]': 'Marshall',
     # Test players
     '[174, 175, 176, 153, 40]': 'John',
-    '[62, 200, 246, 48, 48]': 'Sherri'
+    '[62, 200, 246, 48, 48]': 'Sherri',
+    '[203, 48, 38, 3, 222]': 'TestCard'
 }
 
 player_status={
@@ -71,10 +72,11 @@ player_status={
     'Marshall': 'inactive',
     # Test players
     'John': 'inactive',
-    'Sherri': 'inactive'
+    'Sherri': 'inactive',
+    'TestCard': 'inactive'
 }
 
-player_assigment={
+player_assignment={
     'Tony': 'YoricksSkull',
     'Dani': 'ArthursTowel',
     'Zach': 'PippinsBrooch',
@@ -85,68 +87,67 @@ player_assigment={
     'Marshall': 'HestersA',
     # Test players
     'John': 'NotLost',
-    'Sherri': 'NotLost'
+    'Sherri': 'NotLost',
+    'TestCard': 'TestTag'
 }
 
-"""
+'''
 The first set of clues indcating which passkeys to find.
-""" 
-clues_choose={
-    "TestCard":
-    "This is a test, a trial, a small essay,\nTo see if words will flow in ordered \n    grace,\nA fleeting glimpse of what a verse may \n    say,\nA simple task, to find poetic space.",
-    "TestSticker":
-    "A test it is, a challenge to the mind,\nTo shape these words, a pattern to define,\nTo see if thought can rhythm truly find,\nA simple task, a purpose to refine.",
-    "TestTag":
-    "A test, a trial, this, a fleeting art,\nTo weave a spell, to play a subtle part,\nTo give these words a life, a beating \n    heart,\nA simple task, to tear the soul apart.",
-
-    "BabelFish":
-    "A tiny friend, within the ear it lies,\nTranslating tongues, of any alien kind.\nA miracle of science, a wondrous prize,\nUnlocking worlds, where understanding's \n    enshrined.",
-    "PippisBrooch":
-    "A gift of grace, from Elven hands so fine,\nA shimmering gem, a beauty unsurpassed.\nIt whispers tales of ancient lore divine,\nA bond of friendship, forever to be cast.",
-    "MarleysChains":
-    "A specter bound, by errors of the past,\nA chilling sight, where guilt forever \n    lies.\nA mournful plea, for mercy that won't \n    last,\nA haunting sign, of where the soul can \n    rise.",
-    "DarcysLetter":
-    "A confession penned, with honesty and \n    grace,\nOf pride subdued, and prejudice laid low.\nA plea for love, in words of heartfelt \n    space,\nA chance for bliss, where true affections \n    grow.",
-    "JulietsPoison":
-    "A secret held, a deadly art concealed,\nTo mimic death, and steal the life away.\nA desperate act, where true love is \n    revealed,\nA final sleep, until the break of day.",
-    "HestersA":
-    "A mark of shame, upon a breast it lies,\nA symbol borne, of sin and shame and \n    grace.\nA constant thorn, that pierces and that \n    tries,\nA badge of love, in this forsaken place.",
-    "TimeTurner":
-    "A golden hour, spun within a hand,\nTo bend the clock, and time's relentless \n    flow.\nA secret kept, across the wizard land,\nTo mend the past, and futures yet to know.",
-    "Tollbooth":
-    "A coin unseen, yet payment it demands,\nFor entry sought, to lands of pure \n    delight.\nA toll exacted, by unseen hands,\nFor journeys born, in shadows of the \n    night.",
-    "ArthursTowel":
-    "A traveler's friend, a comfort in the \n    vast,\nA humble cloth, yet worth a king's domain.\nThrough cosmic woes, its presence ever \n    fast\nA symbol of hope, defying space and rain.",
-    "YoricksSkull":
-    "I was a head, once full of wit and grace,\nNow hollowed out, a vessel for the dust.\nMy laughter's gone, replaced by a grim \n    face,\nA silent echo of life's fleeting gust."
+''' 
+passkey_clues={
+    'BabelFish':
+    'A tiny friend, within the ear it lies,\nTranslating tongues, of any alien kind.\nA miracle of science, a wondrous prize,\nUnlocking worlds, where understanding's \n    enshrined.',
+    'PippisBrooch':
+    'A gift of grace, from Elven hands so fine,\nA shimmering gem, a beauty unsurpassed.\nIt whispers tales of ancient lore divine,\nA bond of friendship, forever to be cast.',
+    'MarleysChains':
+    'A specter bound, by errors of the past,\nA chilling sight, where guilt forever \n    lies.\nA mournful plea, for mercy that won't \n    last,\nA haunting sign, of where the soul can \n    rise.',
+    'DarcysLetter':
+    'A confession penned, with honesty and \n    grace,\nOf pride subdued, and prejudice laid low.\nA plea for love, in words of heartfelt \n    space,\nA chance for bliss, where true affections \n    grow.',
+    'JulietsPoison':
+    'A secret held, a deadly art concealed,\nTo mimic death, and steal the life away.\nA desperate act, where true love is \n    revealed,\nA final sleep, until the break of day.',
+    'HestersA':
+    'A mark of shame, upon a breast it lies,\nA symbol borne, of sin and shame and \n    grace.\nA constant thorn, that pierces and that \n    tries,\nA badge of love, in this forsaken place.',
+    'TimeTurner':
+    'A golden hour, spun within a hand,\nTo bend the clock, and time\'s relentless \n    flow.\nA secret kept, across the wizard land,\nTo mend the past, and futures yet to know.',
+    'Tollbooth':
+    'A coin unseen, yet payment it demands,\nFor entry sought, to lands of pure \n    delight.\nA toll exacted, by unseen hands,\nFor journeys born, in shadows of the \n    night.',
+    'ArthursTowel':
+    'A traveler\'s friend, a comfort in the \n    vast,\nA humble cloth, yet worth a king\'s domain.\nThrough cosmic woes, its presence ever \n    fast\nA symbol of hope, defying space and rain.',
+    'YoricksSkull':
+    'I was a head, once full of wit and grace,\nNow hollowed out, a vessel for the dust.\nMy laughter's gone, replaced by a grim \n    face,\nA silent echo of life's fleeting gust.',
+ 
+    'TestTag':
+    'A test, a trial, this, a fleeting art,\nTo weave a spell, to play a subtle part,\nTo give these words a life, a beating \n    heart,\nA simple task, to tear the soul apart.'
 }
 
-clues_search={
+artifact_clues={
 'YoricksSkull':
-    "no clue",
+    'no clue',
 'ArthursTowel':
-    "no clue",
+    'no clue',
 'PippinsBrooch':
-    "no clue",
+    'no clue',
 'BabelFish':
-    "no clue",
+    'no clue',
 'JulietsPoison':
-    "no clue",
+    'no clue',
 'TimeTurner':
-    "no clue",
+    'no clue',
 'DarcysLetter':
-    "no clue",
+    'no clue',
 'HestersA':
-    "no clue"
+    'no clue',
+'TestSticker':
+    'no clue'
 }
 
 ErrorMessages={
-    "Error":
-    "An error found, a glitch, a sudden halt,\nMy program stumbles, loses its own fault.\nA message cryptic, a frustrating call,\nI have encountered an error, that's all.",
-    "NotAuthenticated":
-    "You are not logged, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.",
-    "NotLost":
-    "This passkey, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis passkey is not lost, it's in its \n    place",
-    "WrongPasskey":
-    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
+    'Error':
+    'An error found, a glitch, a sudden halt,\nMy program stumbles, loses its own fault.\nA message cryptic, a frustrating call,\nI have encountered an error, that's all.',
+    'NotAuthenticated':
+    'You are not logged, the manual\'s command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.',
+    'NotLost':
+    'This passkey, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis passkey is not lost, it's in its \n    place',
+    'WrongPasskey':
+    'This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail.'
 }
