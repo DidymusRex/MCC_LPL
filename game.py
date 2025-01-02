@@ -170,19 +170,9 @@ def publish_reset(topic):
 
 # ------------------------------------------------------------------------------
 def main():
+        global p, mqtt_client
         mixer.init()
         p.hw('INIT')
-
-        # MQTT client setup
-        print('MQTT client setup')
-        mqtt_client = mqtt.Client()
-        mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
-        mqtt_client.on_message = on_message
-        mqtt_client.on_connect = on_connect
-
-        # Connect to the MQTT broker
-        print('MQTT client connect')
-        mqtt_client.connect(mqtt_broker, mqtt_port, 60)
 
         # Start the MQTT loop
         print('MQTT client loop')
@@ -208,7 +198,17 @@ if __name__ == '__main__':
                 printer_interface,
                 printer_in_ep,
                 printer_out_ep)
+        
+        # MQTT client setup
+        print('MQTT client setup')
+        mqtt_client = mqtt.Client()
+        mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
+        mqtt_client.on_message = on_message
+        mqtt_client.on_connect = on_connect
 
+        # Connect to the MQTT broker
+        print('MQTT client connect')
+        mqtt_client.connect(mqtt_broker, mqtt_port, 60)
         test_printer()
         speak_text('the library is now open for business')
         active_player = None
