@@ -78,8 +78,6 @@ def process_tag(uid):
 # ------------------------------------------------------------------------------
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 def main():
-    continue_reading = True
-
     while continue_reading:
         
         # Scan for cards    
@@ -111,7 +109,10 @@ def main():
             if status == MIFAREReader.MI_OK:
                 MIFAREReader.MFRC522_Read(8)
                 MIFAREReader.MFRC522_StopCrypto1()
+
+                # process the tag. Add a short delay to avoid 2x reads
                 process_tag(uid)
+                time.sleep(2)
             else:
                 print ("Authentication error")
 
@@ -139,4 +140,6 @@ if __name__ == "__main__":
     print('MQTT client loop')
     mqtt_client.loop_start()
     
+    continue_reading = True
+
     main()

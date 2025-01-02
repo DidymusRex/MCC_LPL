@@ -24,9 +24,10 @@ def on_connect(client, userdata, flags, rc):
 MQTT receive message callback
 """
 def on_message(client, userdata, msg):
-    print("message topic=",msg.topic)
-    print("message qos=",msg.qos)
-    print("message retain flag=",msg.retain)
+    print("message topic .......:",msg.topic)
+    print("message message .....:",msg.topic)
+    # print("message qos .........:",msg.qos)
+    # print("message retain flag .:",msg.retain)
     print("-" * 40)
 
 mqc = mqtt.Client(client_id="monitor",
