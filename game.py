@@ -22,6 +22,8 @@ def welcome_player(m):
 
 # ------------------------------------------------------------------------------
 def process_player(m):
+        global active_player
+
         active_player = m
 
         if player_status[m] == 'inactive':
@@ -41,6 +43,8 @@ def process_player(m):
 
 # ------------------------------------------------------------------------------
 def process_passkey(m):
+        global active_player
+
         if active_player == 'none':
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
