@@ -98,7 +98,7 @@ def print_library_header():
         p.image('images/MCCL_Logo_C.png')
         p.text('Miscatonic Community College\n')
 
-        p.set(width=2, height=2)
+        p.set(align='CENTER', font='A', width=2, height=2)
         p.text('Library\n')
 
 # ------------------------------------------------------------------------------

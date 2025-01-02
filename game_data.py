@@ -137,7 +137,7 @@ artifact_clues = {
     "no clue",
 "HestersA":
     "no clue",
-"TestSticker":
+"TestTag":
     "no clue"
 }
 
