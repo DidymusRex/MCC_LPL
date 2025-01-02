@@ -18,7 +18,7 @@ import uuid
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def welcome_player(m):
-        speak_text(f"welcome, {m}.")
+        speak_text(f'welcome, {m}.')
 
 # ------------------------------------------------------------------------------
 def process_player(m):
@@ -31,7 +31,7 @@ def process_player(m):
 
         elif player_status[m] == 'passkey':
                 player_status[m] = 'artifact'
-                speak_text(f"{m}, please scan your passkey")
+                speak_text(f'{m}, please scan your passkey')
 
         elif player_status[m] == 'artifact':
                 player_status[m] = 'final'
@@ -60,15 +60,17 @@ def process_artifact(m):
         pass
 
 # ------------------------------------------------------------------------------
-def test_printer(p):
+def test_printer():
+        global p
+
         p.set(align='LEFT', font='A', width=1, height=1)
         p.text('Font A max chars 33\n')
-        p.text("----.----0----.----0----.---0---\n")
+        p.text('----.----0----.----0----.---0---\n')
         p.text(time.strftime('%a %b %d %Y %r\n'))
 
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text('Font B max chars 44\n')
-        p.text("----.----0----.----0----.---0----.---0----\n")
+        p.text('----.----0----.----0----.---0----.---0----\n')
         p.text(time.strftime('%a %b %d %Y %r\n'))
 
         p.set(align='CENTER')
@@ -84,6 +86,7 @@ def test_printer(p):
 
 # ------------------------------------------------------------------------------
 def print_library_header():
+        global p
         # Library Logo
         p.set(align='CENTER', font='A', width=1, height=1)
         p.image('images/MCCL_LogoC.png')
@@ -94,6 +97,7 @@ def print_library_header():
 
 # ------------------------------------------------------------------------------
 def print_passkey_clue(m):
+        global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text(passkey_clues[player_assignment[m]])
@@ -102,9 +106,10 @@ def print_passkey_clue(m):
 
 # ------------------------------------------------------------------------------
 def print_artifact_clue(m):
+        global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(artifact_clues[[player_assignment[m]])
+        p.text(artifact_clues[player_assignment[m]])
 
         p.cut()
 
@@ -117,24 +122,24 @@ def play_sound(sound_file):
 
 # ------------------------------------------------------------------------------
 def speak_text(text):
-        print("speaking text")
-        with open("temp.txt", "w") as temp:
-        temp.write(text)
+        print('speaking text')
+        with open('temp.txt', 'w') as temp:
+                temp.write(text)
 
-        cmd="cat temp.txt|espeak -ven+m4 -g5 -s160"
+        cmd='cat temp.txt|espeak -ven+m4 -g5 -s160'
         call([cmd],shell=True)
 
 # ------------------------------------------------------------------------------
 def on_connect(client, userdata, flags, rc):
-        print("Connected with result code " + str(rc))
+        print('Connected with result code ' + str(rc))
 
         # Subscribe to the MQTT topics upon successful connection
-        client.subscribe("mcc/#")
+        client.subscribe('mcc/#')
 
 # ------------------------------------------------------------------------------
 def on_message(client, userdata, msg):
         topic = msg.topic
-        message = msg.payload.decode("utf-8")
+        message = msg.payload.decode('utf-8')
 
         print(f'sub- topic: {topic}')
         print(f'sub- message: {message}')
@@ -146,7 +151,7 @@ def on_message(client, userdata, msg):
         elif topic == 'mcc/artifact'
                 process_artifact(message)
         else:
-                print(f"--- ignoring {topic} {message} ---")
+                print(f'--- ignoring {topic} {message} ---')
  
 # ------------------------------------------------------------------------------
 def publish_message(topic, message):
@@ -158,10 +163,10 @@ def publish_message(topic, message):
 
 # ------------------------------------------------------------------------------
 def publish_reset(topic):
-        # Publish the message "reset" to the specified MQTT topic
+        # Publish the message 'reset' to the specified MQTT topic
         print(f'Sending reset to {topic}')
 
-        mqtt_client.publish(topic, "reset")
+        mqtt_client.publish(topic, 'reset')
 
 # ------------------------------------------------------------------------------
 def main():
@@ -188,15 +193,15 @@ def main():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-if __name__ == "__main__":
+if __name__ == '__main__':
         # Configure Printer
-        printer_type="Usb"
+        printer_type='Usb'
         printer_vendor=0x28e9
         printer_product=0x0289
         printer_interface=0
         printer_in_ep=0x81
         printer_out_ep=0x03
-        printer_profile="simple"
+        printer_profile='simple'
 
         p = printer.Usb(printer_vendor,
                 printer_product,
@@ -205,8 +210,8 @@ if __name__ == "__main__":
                 printer_out_ep)
 
         test_printer()
-        speak_text("the library is now open for business")
+        speak_text('the library is now open for business')
         active_player = None
 
-        print("BEGIN")
+        print('BEGIN')
         main()
