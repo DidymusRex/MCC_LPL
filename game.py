@@ -123,22 +123,22 @@ def print_library_header():
 
 # ------------------------------------------------------------------------------
 def print_passkey_clue(passkey):
-        print(f'print_passkey_clue({passkey}) for {player_assignment[passkey]}')
+        print(f'print_passkey_clue({passkey}) for {player_assignment[active_player]}')
 
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(passkey_clues[player_assignment[passkey]])
+        p.text(passkey_clues[player_assignment[active_player]])
 
         p.cut()
 
 # ------------------------------------------------------------------------------
 def print_artifact_clue(artifact):
-        print(f'print_artifact_clue({artifact}) for {player_assignment[artifact]}')
+        print(f'print_artifact_clue({artifact}) for {player_assignment[active_player]}')
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(artifact_clues[player_assignment[artifact]])
+        p.text(artifact_clues[player_assignment[active_player]])
 
         p.cut()
 
