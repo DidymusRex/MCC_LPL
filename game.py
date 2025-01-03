@@ -11,56 +11,77 @@ from game_data import *
 import paho.mqtt.client as mqtt
 import os
 from pygame import mixer
-from subprocess import call
+from subprocess import call8
 import time
 import uuid
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def process_player(m):
-        print(f'process_player({m})')
+def process_player(player):
+        print(f'process_player({player})')
 
         global active_player
 
-        active_player = m
+        active_player = player
 
-        if player_status[m] == 'inactive':
-                player_status[m] = 'passkey'
-                speak_text(f'welcome, {m}.')
-                print_passkey_clue(m)
+        if player_status[player] == 'inactive':
+                player_status[player] = 'passkey'
+                speak_text(f'welcome, {player}.')
+                print_passkey_clue(player)
 
-        elif player_status[m] == 'passkey':
-                player_status[m] = 'artifact'
-                speak_text(f'{m}, please scan your passkey')
+        elif player_status[player] == 'passkey':
+                player_status[player] = 'artifact'
+                speak_text(f'{player}, please scan your passkey')
 
-        elif player_status[m] == 'artifact':
-                player_status[m] = 'final'
+        elif player_status[player] == 'artifact':
+                player_status[player] = 'final'
 
         else:
-                player_status[m] = 'active'
+                player_status[player] = 'active'
 
 # ------------------------------------------------------------------------------
-def process_passkey(m):
-        print(f'process_passkey({m})')
+def process_passkey(passkey):
+        print(f'process_passkey({passkey})')
         global active_player
 
         if active_player == 'none':
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
-        if m != player_assignment[active_player]:
+        if passkey != player_assignment[active_player]:
                 # this leaks a little information about the passkey
-                if m in active_passkeys:
+                if passkey in artifacts:
                         speak_text(ErrorMessages['WrongPasskey'])
                 else:
                         speak_text(ErrorMessages['NotLost'])
         else:
                 player_status[active_player] = 'passkey'
-                print_artifact_clue(m)
+                print_artifact_clue(passkey)
 
 # ------------------------------------------------------------------------------
-def process_artifact(m):
-        pass
+def process_artifact(artifact):
+        print(f'process_artifact({artifact})')
+        global active_player
+
+        if active_player == 'none':
+                speak_text(ErrorMessages['NotAuthenticated'])
+                return
+
+        if artifact != player_assignment[active_player]:
+                # this leaks a little information about the passkey
+                if artifact in artifacts:
+                        speak_text(ErrorMessages['WrongPasskey'])
+                else:
+                        speak_text(ErrorMessages['NotLost'])
+        else:
+                player_status[active_player] = 'artifact'
+                artifacts[artifact] = 'found'
+                # have all artifacts been checked in?
+                if 'lost' in artifacts.values():
+                        # we keep lookin for more artifacts
+                        print_final_clue(artifact)
+                else:
+                        print_final_clue('final')
 
 # ------------------------------------------------------------------------------
 def test_printer():
@@ -101,25 +122,29 @@ def print_library_header():
         p.text('Library\n')
 
 # ------------------------------------------------------------------------------
-def print_passkey_clue(m):
-        print(f'print_passkey_clue({m}) for {player_assignment[m]}')
+def print_passkey_clue(passkey):
+        print(f'print_passkey_clue({passkey}) for {player_assignment[passkey]}')
 
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(passkey_clues[player_assignment[m]])
+        p.text(passkey_clues[player_assignment[passkey]])
 
         p.cut()
 
 # ------------------------------------------------------------------------------
-def print_artifact_clue(m):
-        print(f'print_artifact_clue({m}) for {player_assignment[m]}')
+def print_artifact_clue(artifact):
+        print(f'print_artifact_clue({artifact}) for {player_assignment[artifact]}')
         global p
         print_library_header()
         p.set(align='LEFT', font='B', width=1, height=1)
-        p.text(artifact_clues[player_assignment[m]])
+        p.text(artifact_clues[player_assignment[artifact]])
 
         p.cut()
+
+# ------------------------------------------------------------------------------
+def print_final_clue(artifact):
+        pass
 
 # ------------------------------------------------------------------------------
 def play_sound(sound_file):
@@ -134,7 +159,7 @@ def speak_text(text):
         with open('temp.txt', 'w') as temp:
                 temp.write(text)
 
-        time.sleep(.1)
+        time.sleep(.5)
         cmd='cat temp.txt|espeak -ven+f3 -g5 -s160'
         call([cmd],shell=True)
 
@@ -169,13 +194,6 @@ def publish_message(topic, message):
         print(f'pub- message: {message}')
 
         mqtt_client.publish(topic, message)
-
-# ------------------------------------------------------------------------------
-def publish_reset(topic):
-        # Publish the message 'reset' to the specified MQTT topic
-        print(f'Sending reset to {topic}')
-
-        mqtt_client.publish(topic, 'reset')
 
 # ------------------------------------------------------------------------------
 def main():

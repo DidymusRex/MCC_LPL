@@ -34,16 +34,16 @@ passkeys = {
     "[117, 61, 155, 154, 73]": "TestTag"
 }
 
-active_passkeys={
-    "YoricksSkull": "inactive",
-    "ArthursTowel": "inactive",
-    "PippinsBrooch": "inactive",
-    "BabelFish": "inactive",
-    "JulietsPoison": "inactive",
-    "TimeTurner": "inactive",
-    "DarcysLetter": "inactive",
-    "HestersA": "inactive",
-    "TestTag": "inactive"
+artifacts={
+    "YoricksSkull": "lost",
+    "ArthursTowel": "lost",
+    "PippinsBrooch": "lost",
+    "BabelFish": "lost",
+    "JulietsPoison": "lost",
+    "TimeTurner": "lost",
+    "DarcysLetter": "lost",
+    "HestersA": "lost",
+    "TestTag": "lost"
 }
 
 players={
