@@ -34,10 +34,10 @@ p.text("----.----0----.----0----.---0----.---0----\n")
 for k, v in ErrorMessages.items():
     print_message(k,v)
 
-for k, v in clues_choose.items():
+for k, v in passkey_clues.items():
     print_message(k,v)
 
-for k, v in clues_search.items():
+for k, v in artifact_clues.items():
     print_message(k,v)
 
 p.cut()
