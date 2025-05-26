@@ -97,7 +97,7 @@ The first set of clues indcating which passkeys to find.
 passkey_clues={
     "BabelFish":
     "A tiny friend, within the ear it lies,\nTranslating tongues, of any alien kind.\nA miracle of science, a wondrous prize,\nUnlocking worlds, where understanding's \n    enshrined.",
-    "PippisBrooch":
+    "PippinsBrooch":
     "A gift of grace, from Elven hands so fine,\nA shimmering gem, a beauty unsurpassed.\nIt whispers tales of ancient lore divine,\nA bond of friendship, forever to be cast.",
     "MarleysChains":
     "A specter bound, by errors of the past,\nA chilling sight, where guilt forever \n    lies.\nA mournful plea, for mercy that won't \n    last,\nA haunting sign, of where the soul can \n    rise.",
