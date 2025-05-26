@@ -117,9 +117,14 @@ passkey_clues={
     "I was a head, once full of wit and grace,\nNow hollowed out, a vessel for the dust.\nMy laughter's gone, replaced by a grim \n    face,\nA silent echo of life's fleeting gust.",
  
     "TestTag":
-    "A test, a trial, this, a fleeting art,\nTo weave a spell, to play a subtle part,\nTo give these words a life, a beating \n    heart,\nA simple task, to tear the soul apart."
+    "A test, a trial, this, a fleeting art,\nTo weave a spell, to play a subtle part,\nTo give these words a life, a beating \n    heart,\nA simple task, to tear the soul apart.",
+    "NotLost":
+    "The empty slot, a barren, lonely space,\nNo treasure found, nor artifact to\n    claim.\nHis quest remains, with unadorned grace,\nNo fitting prize to glorify his name."
 }
 
+"""
+These clue indicate where to find the artifacts
+"""
 artifact_clues = {
 "YoricksSkull":
     "no clue",
