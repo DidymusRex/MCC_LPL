@@ -132,11 +132,20 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, end_read)
 
     # Create an object of the class mfrc522
+    # Hookup
+    # SDA - PUR - 24
+    # SCK - GRY - 23
+    # MOSI - WHT - 19
+    # MSO - BLK - 21
+    # IRQ - BRN - NC
+    # GND - RED - 6 or any GND
+    # RST - ORN - 22
+    # 3V3 - YLW - 1
     MIFAREReader = mfrc522.MFRC522()
 
     # MQTT client setup
     print('MQTT client setup')
-    mqtt_client = mqtt.Client()
+    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "card_reader")
     mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
     mqtt_client.on_message = on_message
     mqtt_client.on_connect = on_connect
