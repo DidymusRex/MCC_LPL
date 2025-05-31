@@ -18,23 +18,31 @@ import uuid
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def process_player(player):
+        """
+        An ID card has ben scanned
+        """
         print(f'process_player({player})')
 
-        global active_player
+        if player not in player_status:
+                speak_text('Invalid ID detected, the authorities have been notified')
+                return
+
+        if player == active_player:
+                 speak_text(f'{player}, you are already authenticated.')
+                 return
 
         active_player = player
 
         if player_status[player] == 'inactive':
-                player_status[player] = 'passkey'
-                speak_text(f'welcome, {player}.')
+                speak_text(f'welcome, {player}. You have been authenticated')
                 print_passkey_clue(player)
+                player_status[player] = 'active'
+
+        elif player_status[player] == 'active':
+                speak_text(f'{player}, please scan a passkey')
 
         elif player_status[player] == 'passkey':
-                player_status[player] = 'artifact'
-                speak_text(f'{player}, please scan your passkey')
-
-        elif player_status[player] == 'artifact':
-                player_status[player] = 'final'
+                speak_text(f'{player}, please scan an artifact')
 
         else:
                 player_status[player] = 'active'
@@ -42,77 +50,42 @@ def process_player(player):
 # ------------------------------------------------------------------------------
 def process_passkey(passkey):
         print(f'process_passkey({passkey})')
-        global active_player
 
-        if active_player == 'none':
+        if active_player == 'None':
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
-        if passkey != player_assignment[active_player]:
-                # this leaks a little information about the passkey
-                if passkey in artifacts:
-                        speak_text(ErrorMessages['WrongPasskey'])
-                else:
-                        speak_text(ErrorMessages['NotLost'])
-        else:
-                player_status[active_player] = 'passkey'
+        if passkey == player_assignment[active_player]:
                 print_artifact_clue(passkey)
+                player_status[active_player] = 'passkey'
+
+        else:
+                speak_text(ErrorMessages['WrongPasskey'])
 
 # ------------------------------------------------------------------------------
 def process_artifact(artifact):
         print(f'process_artifact({artifact})')
         global active_player
 
-        if active_player == 'none':
+        if active_player == 'None':
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
-        if artifact != player_assignment[active_player]:
-                # this leaks a little information about the passkey
-                if artifact in artifacts:
-                        speak_text(ErrorMessages['WrongPasskey'])
-                else:
-                        speak_text(ErrorMessages['NotLost'])
-        else:
-                player_status[active_player] = 'artifact'
+        if artifact == player_assignment[active_player]:
                 artifacts[artifact] = 'found'
+                player_status[active_player] = 'artifact'
+
                 # have all artifacts been checked in?
                 if 'lost' in artifacts.values():
-                        # we keep lookin for more artifacts
+                        # we keep looking for more artifacts
                         print_final_clue(artifact)
                 else:
                         print_final_clue('final')
-
-# ------------------------------------------------------------------------------
-def test_printer():
-        global p
-
-        p.set(align='LEFT', font='A', width=1, height=1)
-        p.text('Font A max chars 33\n')
-        p.text('----.----0----.----0----.---0---\n')
-        p.text(time.strftime('%a %b %d %Y %r\n'))
-
-        p.set(align='LEFT', font='B', width=1, height=1)
-        p.text('Font B max chars 44\n')
-        p.text('----.----0----.----0----.---0----.---0----\n')
-        p.text(time.strftime('%a %b %d %Y %r\n\n'))
-
-        p.set(align='CENTER')
-        v = '2695880042000'
-        p.barcode(v, 'EAN13', 64, 2, 'OFF', 'B')
-        p.text(v)
-
-        p.image('images/MCCL_Logo_C.png')
-
-        v=str(uuid.uuid4())
-        p.qr(v, size=6)
-        p.text(v)
-        # Feed some paper
-        p.cut()
+        else:
+                speak_text(ErrorMessages['WrongArtifact'])
 
 # ------------------------------------------------------------------------------
 def print_library_header():
-        global p
         # Library Logo
         p.set(align='CENTER', font='A', width=1, height=1)
         p.image('images/MCCL_Logo_C.png')
@@ -125,8 +98,9 @@ def print_library_header():
 def print_passkey_clue(passkey):
         print(f'print_passkey_clue({passkey}) for {player_assignment[active_player]}')
 
-        global p
         print_library_header()
+        p.set(align='LEFT', font='A', width=2, height=2)
+        p.text(active_player)
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text(passkey_clues[player_assignment[active_player]])
 
@@ -135,8 +109,10 @@ def print_passkey_clue(passkey):
 # ------------------------------------------------------------------------------
 def print_artifact_clue(artifact):
         print(f'print_artifact_clue({artifact}) for {player_assignment[active_player]}')
-        global p
+
         print_library_header()
+        p.set(align='LEFT', font='A', width=2, height=2)
+        p.text(active_player)
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text(artifact_clues[player_assignment[active_player]])
 
@@ -150,8 +126,8 @@ def print_final_clue(artifact):
 def play_sound(sound_file):
         print(f'play_sound({sound_file})')
 
-        mixer.music.load(sfx_location + sound_file)
-        mixer.music.play()
+        sfx = mixer.Sound(sfx_location + sound_file)
+        sfx.play()
 
 # ------------------------------------------------------------------------------
 def speak_text(text):
@@ -197,8 +173,6 @@ def publish_message(topic, message):
 
 # ------------------------------------------------------------------------------
 def main():
-        global p, mqtt_client
-
         # Start the MQTT loop
         print('MQTT client loop')
         mqtt_client.loop_start()
@@ -208,43 +182,52 @@ def main():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
+active_player = 'None'
+active_passkey = 'None'
+active_artifact = 'None'
+
+# Configure Printer
+printer_type='Usb'
+printer_vendor=0x28e9
+printer_product=0x0289
+printer_interface=0
+printer_in_ep=0x81
+printer_out_ep=0x03
+printer_profile='simple'
+
+p = printer.Usb(printer_vendor,
+        printer_product,
+        printer_interface,
+        printer_in_ep,
+        printer_out_ep)
+p.hw('INIT')
+
+# MQTT client setup
+print('MQTT client setup')
+mqtt_client = mqtt.Client()
+mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
+mqtt_client.on_message = on_message
+mqtt_client.on_connect = on_connect
+
+# pygam mixer setup
+mixer.init()
+
+# Connect to the MQTT broker
+print('MQTT client connect')
+mqtt_client.connect(mqtt_broker, mqtt_port, 60)
+
+# We may begin!
+print_library_header()
+p.cut()
+
+play_sound('34141__erh__swell-pad.wav')
+speak_text('the library is now open for business')
+active_player = 'none'
+
+print('BEGIN')
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
 if __name__ == '__main__':
-        # Configure Printer
-        printer_type='Usb'
-        printer_vendor=0x28e9
-        printer_product=0x0289
-        printer_interface=0
-        printer_in_ep=0x81
-        printer_out_ep=0x03
-        printer_profile='simple'
-
-        p = printer.Usb(printer_vendor,
-                printer_product,
-                printer_interface,
-                printer_in_ep,
-                printer_out_ep)
-        p.hw('INIT')
-
-        # MQTT client setup
-        print('MQTT client setup')
-        mqtt_client = mqtt.Client()
-        mqtt_client.username_pw_set(username=mqtt_username, password=mqtt_password)
-        mqtt_client.on_message = on_message
-        mqtt_client.on_connect = on_connect
-
-        # pygam mixer setup
-        mixer.init()
-
-        # Connect to the MQTT broker
-        print('MQTT client connect')
-        mqtt_client.connect(mqtt_broker, mqtt_port, 60)
-
-        # We may begin!
-        print_library_header()
-        p.cut()
-        
-        speak_text('the library is now open for business')
-        active_player = 'none'
-
-        print('BEGIN')
         main()

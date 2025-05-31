@@ -150,9 +150,11 @@ ErrorMessages = {
     "Error":
     "An error found, a glitch, a sudden halt,\nMy program stumbles, loses its own fault.\nA message cryptic, a frustrating call,\nI have encountered an error, that's all.",
     "NotAuthenticated":
-    "You are not logged, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.",
+    "You are not logged in, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.",
     "NotLost":
     "This passkey, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis passkey is not lost, it's in its \n    place",
     "WrongPasskey":
-    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
+    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail.",
+    "WrongArtifact":
+    "This artifact, is not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
 }
