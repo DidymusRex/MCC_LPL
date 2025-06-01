@@ -40,10 +40,10 @@ def process_player(player):
                 player_status[player] = 'active'
 
         elif player_status[player] == 'active':
-                speak_text(f'{player}, please scan a passkey')
+                speak_text(f'please scan a passkey')
 
         elif player_status[player] == 'passkey':
-                speak_text(f'{player}, please scan an artifact')
+                speak_text(f'please scan an artifact')
 
         else:
                 player_status[player] = 'active'
