@@ -21,6 +21,8 @@ def process_player(player):
         """
         An ID card has ben scanned
         """
+        global active_player
+
         print(f'process_player({player})')
 
         if player not in player_status:
@@ -50,6 +52,7 @@ def process_player(player):
 # ------------------------------------------------------------------------------
 def process_passkey(passkey):
         print(f'process_passkey({passkey})')
+        global active_player
 
         if active_player == 'None':
                 speak_text(ErrorMessages['NotAuthenticated'])
