@@ -150,11 +150,21 @@ ErrorMessages = {
     "Error":
     "An error found, a glitch, a sudden halt,\nMy program stumbles, loses its own fault.\nA message cryptic, a frustrating call,\nI have encountered an error, that's all.",
     "NotAuthenticated":
-    "You are not logged in, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this \n    domain,\nSo read with care, and find your rightful \n    gain.",
+    "You are not logged in, the manual's command,\nRead its advice, to understand the land.\nInstructions guide, the path to this domain,\nSo read with care, and find your rightful gain.",
     "NotLost":
-    "This passkey, though strange, is not \n    misplaced,\nNor vanished, gone, nor in the shadows \n    chased.\nIt may be found, its purpose can be \n    traced,\nThis passkey is not lost, it's in its \n    place",
+    "This passkey, though strange, is not misplaced,\nNor vanished, gone, nor in the shadows chased.\nIt may be found, its purpose can be traced,\nThis passkey is not lost, it's in its place",
     "WrongPasskey":
-    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail.",
+    "This passkey, a task not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different trail,\nThis object's purpose, you cannot avail.",
     "WrongArtifact":
-    "This artifact, is not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different \n    trail,\nThis object's purpose, you cannot avail."
+    "This artifact, is not your own,\nBelongs elsewhere, a story left unknown.\nYour quest lies elsewhere, on a different trail,\nThis object's purpose, you cannot avail."
+}
+
+Sfx = {
+    "Startup": "337249__projectsu012__futuristic-computer-room-ambience.wav",
+    "Error": "337267__projectsu012__tremolo-ringing.wav",
+    "Authenticated": "360914__projectsu012__buzzsus-chiptone.wav",
+    "PasskeyFound": "341653__projectsu012__dropping-and-buzzing.wav",
+    "ArtifactFound": "337268__projectsu012__swish-crunch.wav",
+    "invalidRFID": "360972__projectsu012__ray1-chiptone.wav",
+    "MissionComplete": "341620__projectsu012__arpeggiating-delay-ringing.wav"
 }
