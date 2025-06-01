@@ -103,7 +103,7 @@ def print_passkey_clue(passkey):
 
         print_library_header()
         p.set(align='LEFT', font='A', width=2, height=2)
-        p.text(active_player)
+        p.text(active_player + "\n")
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text(passkey_clues[player_assignment[active_player]])
 
