@@ -27,6 +27,7 @@ def process_player(player):
         print(f'process_player({player})')
 
         if player not in player_status:
+                play_sound('334273__projectsu012__metalic-ringing.wav')
                 speak_text('Invalid ID detected, the authorities have been notified')
                 return
 
@@ -37,6 +38,7 @@ def process_player(player):
         active_player = player
 
         if player_status[player] == 'inactive':
+                play_sound('337244__projectsu012__happy-bonus-score.wav')
                 speak_text(f'welcome, {player}. You have been authenticated')
                 print_passkey_clue(player)
                 player_status[player] = 'active'
