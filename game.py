@@ -31,7 +31,6 @@ def process_player(player):
 
         if player == active_player:
                  speak_text(f'{player}, you are already authenticated.')
-                 return
 
         active_player = player
 
