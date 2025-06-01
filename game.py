@@ -22,6 +22,7 @@ def process_player(player):
         An ID card has ben scanned
         """
         global active_player
+        name_spoken = False
 
         print(f'process_player({player})')
 
@@ -31,6 +32,7 @@ def process_player(player):
 
         if player == active_player:
                  speak_text(f'{player}, you are already authenticated.')
+                 name_spoken = True
 
         active_player = player
 
@@ -40,9 +42,13 @@ def process_player(player):
                 player_status[player] = 'active'
 
         elif player_status[player] == 'active':
+                if name_spoken is False:
+                        speak_text(f'{player},')
                 speak_text(f'please scan a passkey')
 
         elif player_status[player] == 'passkey':
+                if name_spoken is False:
+                        speak_text(f'{player},')
                 speak_text(f'please scan an artifact')
 
         else:
@@ -99,6 +105,8 @@ def print_library_header():
 # ------------------------------------------------------------------------------
 def print_passkey_clue(passkey):
         print(f'print_passkey_clue({passkey}) for {player_assignment[active_player]}')
+        play_sound('360990__projectsu012__up1-chiptone.wav')
+        speak_text(passkey_clues[player_assignment[active_player]])
 
         print_library_header()
         p.set(align='LEFT', font='A', width=2, height=2)
@@ -111,10 +119,13 @@ def print_passkey_clue(passkey):
 # ------------------------------------------------------------------------------
 def print_artifact_clue(artifact):
         print(f'print_artifact_clue({artifact}) for {player_assignment[active_player]}')
+        play_sound('360978__projectsu012__powerup-chiptone.wav')
+
+        speak_text(artifact_clues[player_assignment[active_player]])
 
         print_library_header()
         p.set(align='LEFT', font='A', width=2, height=2)
-        p.text(active_player)
+        p.text(active_player + "\n")
         p.set(align='LEFT', font='B', width=1, height=1)
         p.text(artifact_clues[player_assignment[active_player]])
 
