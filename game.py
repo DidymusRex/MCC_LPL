@@ -27,7 +27,7 @@ def process_player(player):
         print(f'process_player({player})')
 
         if player not in player_status:
-                play_sound(Sfx["invalidRFID"])
+                #play_sound(Sfx["invalidRFID"])
                 speak_text('Invalid ID detected, the authorities have been notified')
                 return
 
@@ -38,7 +38,7 @@ def process_player(player):
         active_player = player
 
         if player_status[player] == 'inactive':
-                play_sound(Sfx["Authenticated"])
+                #play_sound(Sfx["Authenticated"])
                 speak_text(f'welcome, {player}. You have been authenticated')
                 print_passkey_clue(player)
                 player_status[player] = 'active'
@@ -107,7 +107,7 @@ def print_library_header():
 # ------------------------------------------------------------------------------
 def print_passkey_clue(passkey):
         print(f'print_passkey_clue({passkey}) for {player_assignment[active_player]}')
-        play_sound(Sfx["PasskeyFound"])
+        #play_sound(Sfx["PasskeyFound"])
         speak_text(passkey_clues[player_assignment[active_player]])
 
         print_library_header()
@@ -121,7 +121,7 @@ def print_passkey_clue(passkey):
 # ------------------------------------------------------------------------------
 def print_artifact_clue(artifact):
         print(f'print_artifact_clue({artifact}) for {player_assignment[active_player]}')
-        play_sound(Sfx["ArtifactFound"])
+        #play_sound(Sfx["ArtifactFound"])
         speak_text(artifact_clues[player_assignment[active_player]])
 
         print_library_header()
@@ -234,7 +234,7 @@ mqtt_client.connect(mqtt_broker, mqtt_port, 60)
 print_library_header()
 p.cut()
 
-play_sound(Sfx["Startup"])
+#play_sound(Sfx["Startup"])
 speak_text('the library is now open for business')
 active_player = 'none'
 
