@@ -61,8 +61,6 @@ def process_passkey(passkey):
         print(f'process_passkey({passkey})')
         global active_player
 
-        print(f'active player is {active_player}')
-
         try:
                 if passkey == player_assignment[active_player]:
                         print_artifact_clue(passkey)
@@ -78,22 +76,21 @@ def process_artifact(artifact):
         print(f'process_artifact({artifact})')
         global active_player
 
-        if active_player == None:
-                speak_text(ErrorMessages['NotAuthenticated'])
-                return
+        try:
+                if artifact == player_assignment[active_player]:
+                        artifacts[artifact] = 'found'
+                        player_status[active_player] = 'artifact'
 
-        if artifact == player_assignment[active_player]:
-                artifacts[artifact] = 'found'
-                player_status[active_player] = 'artifact'
-
-                # have all artifacts been checked in?
-                if 'lost' in artifacts.values():
-                        # we keep looking for more artifacts
-                        print_final_clue(artifact)
+                        # have all artifacts been checked in?
+                        if 'lost' in artifacts.values():
+                                # we keep looking for more artifacts
+                                print_final_clue(artifact)
+                        else:
+                                print_final_clue('final')
                 else:
-                        print_final_clue('final')
-        else:
-                speak_text(ErrorMessages['WrongArtifact'])
+                        speak_text(ErrorMessages['WrongArtifact'])
+        except:
+                speak_text(ErrorMessages['NotAuthenticated'])
 
 # ------------------------------------------------------------------------------
 def print_library_header():
