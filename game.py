@@ -62,7 +62,7 @@ def process_passkey(passkey):
         global active_player
 
         print(f'active player is {active_player}')
-        if active_player is None:
+        if active_player == None:
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
@@ -78,7 +78,7 @@ def process_artifact(artifact):
         print(f'process_artifact({artifact})')
         global active_player
 
-        if active_player is None:
+        if active_player == None:
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
