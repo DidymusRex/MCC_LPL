@@ -61,7 +61,7 @@ def process_passkey(passkey):
         print(f'process_passkey({passkey})')
         global active_player
 
-        if active_player == 'None':
+        if active_player is None:
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
@@ -77,7 +77,7 @@ def process_artifact(artifact):
         print(f'process_artifact({artifact})')
         global active_player
 
-        if active_player == 'None':
+        if active_player is None:
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
 
@@ -196,9 +196,9 @@ def main():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-active_player = 'None'
-active_passkey = 'None'
-active_artifact = 'None'
+active_player = None
+active_passkey = None
+active_artifact = None
 
 # Configure Printer
 printer_type='Usb'
