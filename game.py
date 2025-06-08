@@ -62,16 +62,16 @@ def process_passkey(passkey):
         global active_player
 
         print(f'active player is {active_player}')
-        if active_player == None:
+
+        try:
+                if passkey == player_assignment[active_player]:
+                        print_artifact_clue(passkey)
+                        player_status[active_player] = 'passkey'
+                else:
+                        speak_text(ErrorMessages['WrongPasskey'])
+        except:
                 speak_text(ErrorMessages['NotAuthenticated'])
-                return
 
-        if passkey == player_assignment[active_player]:
-                print_artifact_clue(passkey)
-                player_status[active_player] = 'passkey'
-
-        else:
-                speak_text(ErrorMessages['WrongPasskey'])
 
 # ------------------------------------------------------------------------------
 def process_artifact(artifact):
