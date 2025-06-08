@@ -61,6 +61,7 @@ def process_passkey(passkey):
         print(f'process_passkey({passkey})')
         global active_player
 
+        print(f'active player is {active_player}')
         if active_player is None:
                 speak_text(ErrorMessages['NotAuthenticated'])
                 return
