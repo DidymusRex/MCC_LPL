@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import paho.mqtt.client as mqtt
 """
 A simple, generic MQTT client to monitor MQTT commands and
