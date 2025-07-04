@@ -22,5 +22,7 @@ def speak_text(text):
         cmd='cat temp.txt|espeak -ven+f3 -g5 -s160'
         call([cmd],shell=True)
 
+# pygam mixer setup
+mixer.init()
 play_sound('334261__projectsu012__coin-chime.wav')
 speak_text('check check 1 2 3')
