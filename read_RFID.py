@@ -133,14 +133,16 @@ if __name__ == "__main__":
 
     # Create an object of the class mfrc522
     # Hookup
-    # SDA - PUR - 24
-    # SCK - GRY - 23
-    # MOSI - WHT - 19
-    # MSO - BLK - 21
-    # IRQ - BRN - NC
-    # GND - RED - 6 or any GND
-    # RST - ORN - 22
-    # 3V3 - YLW - 1
+    # RF   - Pi Pin
+    # ----   --
+    # SDA  - 24
+    # SCK  - 23
+    # MOSI - 19
+    # MSO  - 21
+    # IRQ  - NC
+    # GND  - 6, 14, 20, 30, 34, 9, 25, 39
+    # RST  - 22
+    # 3V3  - 1
     MIFAREReader = mfrc522.MFRC522()
 
     # MQTT client setup
