@@ -9,7 +9,7 @@ results
 """
 MQTT values
 """
-mqtt_broker = "mcc-lpl.local"
+mqtt_broker = "mcc-league.local"
 mqtt_account = "mcc"
 mqtt_passwd = "mcc"
 mqtt_topic = "mcc/#"
