@@ -99,8 +99,8 @@ def main():
         p.hw('INIT')
 
         test_printer()
-        print_lottery()
-        print_book_info('The Lord of the Rings', 'J.R.R. Tolkien', '9780544003415')
+        #print_lottery()
+        #print_book_info('The Lord of the Rings', 'J.R.R. Tolkien', '9780544003415')
 
         p.cut()
 
